@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  ImageDownloader
 //
-//  Created by ChangwonKim on 2023/02/24.
+//  Created by window1 on 2023/02/24.
 //
 
 import UIKit

@@ -16,6 +16,7 @@
 		A8552AA229A8C3E8008E78F3 /* ImageDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8552AA129A8C3E8008E78F3 /* ImageDownloaderTests.swift */; };
 		A8552AAC29A8C3E8008E78F3 /* ImageDownloaderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8552AAB29A8C3E8008E78F3 /* ImageDownloaderUITests.swift */; };
 		A8552AAE29A8C3E8008E78F3 /* ImageDownloaderUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8552AAD29A8C3E8008E78F3 /* ImageDownloaderUITestsLaunchTests.swift */; };
+		A8552ABD29A9260F008E78F3 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8552ABC29A9260F008E78F3 /* APICaller.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		A8552AA729A8C3E8008E78F3 /* ImageDownloaderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageDownloaderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8552AAB29A8C3E8008E78F3 /* ImageDownloaderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloaderUITests.swift; sourceTree = "<group>"; };
 		A8552AAD29A8C3E8008E78F3 /* ImageDownloaderUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloaderUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		A8552ABC29A9260F008E78F3 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,9 +101,10 @@
 		A8552A8929A8C3E7008E78F3 /* ImageDownloader */ = {
 			isa = PBXGroup;
 			children = (
+				A8552ABC29A9260F008E78F3 /* APICaller.swift */,
+				A8552A8E29A8C3E7008E78F3 /* ViewController.swift */,
 				A8552A8A29A8C3E7008E78F3 /* AppDelegate.swift */,
 				A8552A8C29A8C3E7008E78F3 /* SceneDelegate.swift */,
-				A8552A8E29A8C3E7008E78F3 /* ViewController.swift */,
 				A8552A9029A8C3E7008E78F3 /* Main.storyboard */,
 				A8552A9329A8C3E8008E78F3 /* Assets.xcassets */,
 				A8552A9529A8C3E8008E78F3 /* LaunchScreen.storyboard */,
@@ -261,6 +264,7 @@
 				A8552A8F29A8C3E7008E78F3 /* ViewController.swift in Sources */,
 				A8552A8B29A8C3E7008E78F3 /* AppDelegate.swift in Sources */,
 				A8552A8D29A8C3E7008E78F3 /* SceneDelegate.swift in Sources */,
+				A8552ABD29A9260F008E78F3 /* APICaller.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
