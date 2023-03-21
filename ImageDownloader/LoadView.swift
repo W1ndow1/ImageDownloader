@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoadView: UIView {
+class LoadView: UIView, URLSessionTaskDelegate {
     
     struct ImageURL {
        static let imageIds: [String] = [
@@ -29,6 +29,7 @@ class LoadView: UIView {
     @IBOutlet private var loadButton: UIButton!
     private var task: URLSessionDataTask!
     private var observation: NSKeyValueObservation!
+    private var imageLoadTask: Task<Void, Error>!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -52,11 +53,38 @@ class LoadView: UIView {
         loadButton.sendActions(for: .touchUpInside)
     }
     
+    func fetchImage(url: URL) async throws -> UIImage {
+        let request = URLRequest(url: url)
+        if imageLoadTask.isCancelled { return UIImage(systemName: "photo")! }
+        let (data, response) = try await URLSession.shared.data(for: request, delegate: self)
+        guard let statusCode = (response as? HTTPURLResponse)?.statusCode, (200...299).contains(statusCode) else { throw NSError(domain: "fetchError", code: 1004) }
+        if imageLoadTask.isCancelled { return UIImage(systemName: "photo")! }
+        guard let image = UIImage(data: data) else { throw NSError(domain: "image converting error", code: 999)}
+        return image
+    }
+    
+    func urlSession(_ session: URLSession, didCreateTask task: URLSessionTask) {
+        observation = task.progress.observe(\.fractionCompleted, options: [.new], changeHandler: { progress, value in
+            DispatchQueue.main.async {
+                self.progressView.progress = Float(progress.fractionCompleted)
+            }
+        })
+    }
+    
+    func startLoad(url: URL) {
+        imageLoadTask = Task(priority: .high) {
+            let image = try await fetchImage(url: url)
+            imageView.image = image
+        }
+    }
+    
+    
     @IBAction private func touchLoadImageButton(_ sender: UIButton) {
+        imageView.image = .init(systemName: "photo")
         sender.isSelected = !sender.isSelected
         
         guard sender.isSelected else {
-            task.cancel()
+            imageLoadTask.cancel()
             return
         }
         
@@ -64,35 +92,7 @@ class LoadView: UIView {
             fatalError("Checking Button Tag")
         }
         let url = ImageURL[sender.tag]
-        let request = URLRequest(url: url)
-        task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error =  error {
-                guard error.localizedDescription == "cancelled" else {
-                    fatalError(error.localizedDescription)
-                }
-                DispatchQueue.main.async {
-                    self.reset()
-                }
-                return
-            }
-            guard let data = data, let image = UIImage(data: data) else {
-                DispatchQueue.main.async {
-                    self.imageView.image = UIImage(systemName: "xmark")
-                }
-                return
-            }
-            DispatchQueue.main.async {
-                self.imageView.image = image
-                self.loadButton.isSelected = false
-            }
-        }
-        task.resume()
-        observation = task.progress.observe(\.fractionCompleted, options: [.new], changeHandler: { progress, change in
-            
-            DispatchQueue.main.async {
-                self.progressView.progress = Float(progress.fractionCompleted)
-            }
-        })
-        task.resume()
+        startLoad(url: url)
+
     }
 }
